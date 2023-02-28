@@ -1,20 +1,8 @@
 package array;
 
-/**
- * Created by gouthamvidyapradhan on 21/03/2017. You are given an n x n 2D matrix representing an
- * image.
- *
- * <p>Rotate the image by 90 degrees (clockwise).
- *
- * <p>Follow up: Could you do this in-place?
- */
+
 public class RotateMatrix {
-  /**
-   * Main method
-   *
-   * @param args
-   * @throws Exception
-   */
+  
   public static void main(String[] args) throws Exception {
     int[][] A = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
     new RotateMatrix().rotate(A);
