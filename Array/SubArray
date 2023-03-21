@@ -1,0 +1,17 @@
+public class Solution {
+    public int zeroFilledSubarray(int[] nums) {
+        int n = nums.length;
+        int count = 0;
+        int i = 0;
+        while (i < n) {
+            int zeros = 0;
+            while (i < n && nums[i] == 0) {
+                zeros++;
+                i++;
+            }
+            count += zeros * (zeros + 1) / 2;
+            i++;
+        }
+        return count;
+    }
+}
