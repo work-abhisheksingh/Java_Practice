@@ -1,0 +1,32 @@
+class Solution {
+    public int minReorder(int n, int[][] connections) {
+        // Create an adjacency list to represent the tree
+        List<List<Integer>> adjList = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            adjList.add(new ArrayList<>());
+        }
+        for (int[] connection : connections) {
+            int u = connection[0], v = connection[1];
+            adjList.get(u).add(v);
+            adjList.get(v).add(-u); // use negative values to indicate a reverse edge
+        }
+        
+        // Use DFS to count the number of edges that need to be reversed
+        int[] count = new int[1];
+        boolean[] visited = new boolean[n];
+        dfs(0, adjList, visited, count);
+        return count[0];
+    }
+    
+    private void dfs(int u, List<List<Integer>> adjList, boolean[] visited, int[] count) {
+        visited[u] = true;
+        for (int v : adjList.get(u)) {
+            if (!visited[Math.abs(v)]) {
+                if (v > 0) {
+                    count[0]++; // increment count for a forward edge
+                }
+                dfs(Math.abs(v), adjList, visited, count);
+            }
+        }
+    }
+}
