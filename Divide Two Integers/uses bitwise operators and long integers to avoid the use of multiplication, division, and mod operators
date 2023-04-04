@@ -1,0 +1,25 @@
+public class Solution {
+    public int divide(int dividend, int divisor) {
+        // Handle overflow cases
+        if (dividend == Integer.MIN_VALUE && divisor == -1) {
+            return Integer.MAX_VALUE;
+        }
+
+        // Convert to long integers to avoid overflow
+        long dividendL = Math.abs((long) dividend);
+        long divisorL = Math.abs((long) divisor);
+
+        // Calculate the quotient using bitwise operators
+        int sign = (dividend > 0) ^ (divisor > 0) ? -1 : 1;
+        long quotient = 0, temp = 0;
+        for (int i = 31; i >= 0; i--) {
+            if (temp + (divisorL << i) <= dividendL) {
+                temp += divisorL << i;
+                quotient |= 1L << i;
+            }
+        }
+
+        // Return the result with the correct sign
+        return (int) (sign * quotient);
+    }
+}
