@@ -1,0 +1,31 @@
+public String multiply(String num1, String num2) {
+    int n1 = num1.length(), n2 = num2.length();
+    int[] result = new int[n1 + n2]; // to store intermediate results
+    StringBuilder sb = new StringBuilder(); // to build the final result
+
+    // multiply each digit of num2 with num1 and store the intermediate results
+    for (int i = n2 - 1; i >= 0; i--) {
+        int digit2 = num2.charAt(i) - '0';
+        for (int j = n1 - 1; j >= 0; j--) {
+            int digit1 = num1.charAt(j) - '0';
+            int product = digit1 * digit2;
+            int pos1 = i + j + 1, pos2 = i + j;
+            product += result[pos1]; // add previous carry
+            result[pos1] = product % 10; // store current digit
+            result[pos2] += product / 10; // propagate carry
+        }
+    }
+
+    // remove leading zeros from result
+    int i = 0;
+    while (i < result.length && result[i] == 0) {
+        i++;
+    }
+
+    // build the final result as a string
+    while (i < result.length) {
+        sb.append(result[i++]);
+    }
+
+    return sb.length() == 0 ? "0" : sb.toString();
+}
