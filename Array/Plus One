@@ -1,0 +1,22 @@
+class Solution {
+    public int[] plusOne(int[] digits) {
+        int n = digits.length;
+        // Start from the least significant digit
+        for (int i = n - 1; i >= 0; i--) {
+            // Increment the digit and check if there's a carry
+            digits[i]++;
+            if (digits[i] < 10) {
+                // No carry, we're done
+                return digits;
+            } else {
+                // There's a carry, set the current digit to 0 and continue with the next digit
+                digits[i] = 0;
+            }
+        }
+        // If we reached this point, it means we had a carry all the way to the most significant digit
+        // Create a new array with one more digit and set the most significant digit to 1
+        int[] result = new int[n + 1];
+        result[0] = 1;
+        return result;
+    }
+}
