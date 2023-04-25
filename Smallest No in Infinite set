@@ -1,0 +1,22 @@
+class SmallestInfiniteSet {
+    private TreeSet<Integer> set;
+
+    public SmallestInfiniteSet() {
+        set = new TreeSet<Integer>();
+        for (int i = 1; i <= 1000; i++) {
+            set.add(i); // add all positive integers to the set
+        }
+    }
+
+    public int popSmallest() {
+        int smallest = set.first(); // get the smallest element in the set
+        set.remove(smallest); // remove the smallest element from the set
+        return smallest; // return the smallest element
+    }
+
+    public void addBack(int num) {
+        if (!set.contains(num)) {
+            set.add(num); // add the number to the set if it's not already in the set
+        }
+    }
+}
