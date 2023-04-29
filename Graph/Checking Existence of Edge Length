@@ -1,0 +1,45 @@
+class Solution {
+    public boolean[] distanceLimitedPathsExist(int n, int[][] edgeList, int[][] queries) {
+        // build adjacency list from edgeList
+        List<int[]>[] adjList = new List[n];
+        for (int i = 0; i < n; i++) {
+            adjList[i] = new ArrayList<>();
+        }
+        for (int[] edge : edgeList) {
+            int u = edge[0], v = edge[1], dis = edge[2];
+            adjList[u].add(new int[]{v, dis});
+            adjList[v].add(new int[]{u, dis});
+        }
+
+        boolean[] ans = new boolean[queries.length];
+        for (int i = 0; i < queries.length; i++) {
+            int p = queries[i][0], q = queries[i][1], limit = queries[i][2];
+            ans[i] = hasShortestPath(p, q, limit, adjList);
+        }
+        return ans;
+    }
+
+    private boolean hasShortestPath(int start, int end, int limit, List<int[]>[] adjList) {
+        // Dijkstra's algorithm to find shortest path with distance less than limit
+        PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(a -> a[1]));
+        pq.offer(new int[]{start, 0});
+        boolean[] visited = new boolean[adjList.length];
+
+        while (!pq.isEmpty()) {
+            int[] curr = pq.poll();
+            int node = curr[0], dis = curr[1];
+            if (node == end) {
+                return true; // found a path from start to end with distance less than limit
+            }
+            visited[node] = true;
+            for (int[] neighbor : adjList[node]) {
+                int nei = neighbor[0], neiDis = neighbor[1];
+                if (!visited[nei] && dis + neiDis < limit) {
+                    pq.offer(new int[]{nei, dis + neiDis});
+                }
+            }
+        }
+
+        return false; // no path from start to end with distance less than limit
+    }
+}
