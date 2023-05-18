@@ -1,0 +1,21 @@
+class Solution {
+    public List<Integer> findSmallestSetOfVertices(int n, List<List<Integer>> edges) {
+        List<Integer> result = new ArrayList<>();
+        int[] inDegrees = new int[n];
+
+        // Calculate the in-degrees of each vertex
+        for (List<Integer> edge : edges) {
+            int to = edge.get(1);
+            inDegrees[to]++;
+        }
+
+        // Add vertices with in-degree 0 to the result
+        for (int i = 0; i < n; i++) {
+            if (inDegrees[i] == 0) {
+                result.add(i);
+            }
+        }
+
+        return result;
+    }
+}
